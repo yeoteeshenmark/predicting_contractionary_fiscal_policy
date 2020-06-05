@@ -7,14 +7,14 @@ import datapungi_fed as dpf
 # Importing the dataset
 data = dpf.data("API Key")
 # Federal Debt Held by Foreign and International Investors as Percent of Gross Domestic Product
-X1 = data.series('HBFIGDQ188S')/100 # quarterly
+X1 = data.series('HBFIGDQ188S').pct_change(fill_method ='ffill') # quarterly
 # Long term government bond yield: 10-year: Main (Including Benchmark)
 X2 = data.series('IRLTLT01USQ156N').pct_change(fill_method ='ffill') #quarterly
 # Trade Weighted U.S. Dollar Index: Broad, Goods and Services
 X3 = ((1+data.series('DTWEXBGS').pct_change(fill_method ='ffill')).resample('Q').prod())-1 #convert daily time series to quarterly
 X3.index = X3.index + pd.DateOffset(days=1)
 # Real GDP growth rate
-X4 = data.series('A191RL1Q225SBEA') #quarterly
+X4 = data.series('A191RL1Q225SBEA')/100 #quarterly
 
 
 # Real Government Consumption Expenditures and Gross Investment
